@@ -82,7 +82,7 @@ class Task extends React.Component {
 					</div>;
 		}
 	
-		return <TaskBlock className={this.props.className || ''}>
+		return <TaskBlock>
 					{partial}
 				</TaskBlock>;
 	}
