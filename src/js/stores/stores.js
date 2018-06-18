@@ -5,9 +5,7 @@ import types from '../actions/types';
 let taskId = 0;
 
 const addTask = (state, task) => {
-	let _state = state;
-
-	return { tasks: [..._state.tasks, {
+	return { tasks: [...state.tasks, {
 		id: taskId ++,
 		name: task.name,
 		status: 'edit'
@@ -15,22 +13,22 @@ const addTask = (state, task) => {
 };
 
 const saveTask = (state, task) => {
-	let activeCount = 0;
-	let updatedTasks = state.tasks.map( (_task, i) => {
-			if (task.status == 'active') {
-				activeCount ++
-			}
-			if (task.id == _task.id) {
-				return {
-					id: task.id,
-					name: task.name,
-					status: task.status
-				}
-			} else {
-				return _task;
-			}
-		});
-	return { tasks: updatedTasks, activeCount:activeCount };
+	return { tasks: state.tasks.map( (_task, i) =>
+			(task.id == _task.id) ? {
+				id: task.id,
+				name: task.name,
+				status: task.status,
+				isSelected: false
+			} : _task
+		)}
+}
+
+
+const selectTask = (state, id) => {
+	return {
+		tasks: state.tasks.map( (task, i) =>
+		(task.id == id) ? {...task, isSelected:true } : task
+	)}
 };
 
 function todo (state = {
@@ -41,6 +39,8 @@ function todo (state = {
 			return addTask (state, {});
 		case types.SAVETASK:
 			return saveTask (state, action.task);
+		case types.SELECTTASK:
+			return selectTask (state, action.task);
 		default:
 			return state;
 	}

@@ -11,3 +11,7 @@ export function removeTask () {
 export function saveTask (task) {
 	return { type: types.SAVETASK, task:task };
 }
+
+export function selectTask (task) {
+	return { type: types.SELECTTASK, task:task };
+}

@@ -1,21 +1,18 @@
 import React from 'react';
-import {connect} from "react-redux";
 
-import { removeTask, saveTask, selectTask } from '../actions/index';
 import TaskBlock from '../components/taskBlock';
 
 class Task extends React.Component {
 
-	constructor (props) {
-		super (props);
+	constructor () {
+		super ();
 
 		this.state = {
-			value: '',
-			selected: false
+			value: ''
 		};
 
 		this.handleChange = this.handleChange.bind(this);
-		this.handleSelect = this.handleSelect.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 		this.handleUpdate = this.handleUpdate.bind(this);
 	}
 
@@ -37,11 +34,8 @@ class Task extends React.Component {
 			value: e.target.value
 		})
 	}
-
-	handleSelect () {
-		this.setState({
-			selected: true
-		});
+	handleClick () {
+		this.props.onClick(this.props.id);
 	}
 
 	handleUpdate (e) {
@@ -49,10 +43,7 @@ class Task extends React.Component {
 
 		let type = e.target.getAttribute('data-id');
 
-		this.setState({
-			selected: false
-		});
-		this.props.saveTask({
+		this.props.onSave({
 			id: this.props.id,
 			name: this.state.value,
 			status: this.getNextStatus(type)
@@ -62,7 +53,7 @@ class Task extends React.Component {
 	render () {
 		let partial;
 
-		if (this.state.selected) {
+		if (this.props.isClicked) {
 			partial = <div className="selected">
 					{this.props.status == 'active' ?
 						<a className="btn complete" data-id="complete" onClick={this.handleUpdate}>Complete</a> :
@@ -70,7 +61,7 @@ class Task extends React.Component {
 					<a className="btn edit" data-id="edit" onClick={this.handleUpdate}>Edit</a>
 				</div>;
 		} else if (this.props.status == 'active' || this.props.status == 'complete') {
-			partial = <div className="btn" onClick={this.handleSelect} >
+			partial = <div className="btn" onClick={this.handleClick} >
 						<h3>{this.props.name}</h3>
 						<span className={`status ${this.props.status}`}>{this.props.status}</span>
 					</div>;
@@ -85,18 +76,4 @@ class Task extends React.Component {
 	}
 }
 
-Task.defaultValue = {
-};
-
-let mapStateToProps = state => ({});
-
-let mapActionsToProps = dispatch =>({
-	removeTask () {
-		return dispatch (removeTask());
-	},
-	saveTask (task) {
-		return dispatch (saveTask(task));
-	}
-});
-
-export default connect(mapStateToProps, mapActionsToProps)(Task);
+export default Task;
