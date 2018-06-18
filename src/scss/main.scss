@@ -27,7 +27,7 @@ body {
 		padding: 15px 25px;
 		position: relative;
 		border-bottom: 1px solid $color_container_border;
-		
+
 		h1 {
 			color: $color_header_main;
 			margin: 0;
@@ -39,22 +39,22 @@ body {
 			right: 25px;
 		}
 	}
-	
+
 	.tasks-container {
 		margin: 30px 10%;
-		
+
 		.task-list {
 			display: flex;
 			flex-flow: row wrap;
 			justify-content: flex-start;
-			
+
 			.task-block {
 				max-width: 33.333%;
 				padding: 10px;
 				flex: 1 1 33.333%;
 			}
 		}
-		
+
 		.task-block {
 			.wrapper {
 				padding: 20px 15px;
@@ -63,31 +63,31 @@ body {
 				height: 80px;
 				align-items: center;
 				display: flex;
-				
+
 				.form {
 					input {
 						border-width: 0;
 						margin-right: 10px;
 						width: 70%;
-						
+
 						&:focus {
 							outline:none;
 						}
 					}
-					span {
+					a {
 						width: 30%;
 					}
 				}
-				
-				
+
+
 				&> * {
 					flex-grow: 1;
 				}
 			}
-			
+
 			.btn {
 				font-weight: bold;
-				
+
 				&:hover {
 					cursor: pointer;
 				}
@@ -116,12 +116,12 @@ body {
 				display: flex;
 				flex-flow: row wrap;
 				align-content: center;
-				
-				span {
+
+				a {
 					display: block;
 					flex: 1 1 50%;
 					text-align: center;
-					
+
 					&:first-child {
 						border-right: 1px solid #c4c4c4;
 					}
@@ -136,17 +136,17 @@ body {
 					}
 				}
 			}
-			
+
 			&.container-complete {
 				&.completed {
 					background-color: #51c392;
 				}
-				
+
 				color: #fff;
 				background-color: $color_taskblock_complete_bg;
 				max-width: 100%;
 				margin: 10px;
-				
+
 				.wrapper {
 					display: block;
 				}
@@ -156,9 +156,9 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-    #main { 
+    #main {
 		.tasks-container {
-			.task-list { 
+			.task-list {
 				.task-block {
 					max-width: 100%;
 					padding: 10px;
@@ -169,9 +169,9 @@ body {
 	}
 }
 @media only screen and (max-width: 768px) and (min-width: 601px) {
-    #main { 
+    #main {
 		.tasks-container {
-			.task-list { 
+			.task-list {
 				.task-block {
 					max-width: 50%;
 					padding: 10px;

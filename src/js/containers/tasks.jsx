@@ -9,47 +9,27 @@ const TaskStatus = props => <TaskBlock className={`container-complete ${props.cl
 
 const TaskList = props => <div className="task-list">{props.children}</div>;
 
-class Tasks extends React.Component {
-	constructor(props) {
-		super(props);
-		
-		this.state = {
-			tasks: [],
-			activeCount: 0
-		};
+const Tasks = props => {
+	let activeCount = 0;
+	for (let x=0; x<props.tasks.length; x++) {
+		activeCount = props.tasks[x].status == 'active' ? activeCount + 1 : activeCount;
 	}
-	
-	componentWillReceiveProps (nextProps) {
-		let newTasks = [];
-		let activeCount = 0;
-		for (let x=0; x<nextProps.tasks.length; x++) {
-			newTasks.push({...nextProps.tasks[x]});
-			activeCount = nextProps.tasks[x].status == 'active' ? activeCount + 1 : activeCount;
-		}
-		this.setState({
-			tasks: newTasks,
-			activeCount: activeCount
-		});
-	}
-	
-	render() {
-		return <div className="tasks-container">
-					<h2>Your tasks</h2>
-					<TaskStatus className={this.state.activeCount == 0 ? 'completed' : ''}>
-						<h3>{this.state.activeCount > 0 ? 'Complete all tasks' : 'All tasks completed'}</h3>
-						<span className="status">
-							{this.state.activeCount > 0 ? `You have ${this.state.activeCount} active tasks` : 'Well done!'}
-						</span>
-					</TaskStatus>
-					<TaskList>
-						{this.state.tasks.map( (task, i) => <Task key={i} id={task.id} details={task} /> )}
-						<TaskBlock className="container-add" handleClick={this.props.addNewTask}>
-							+ Add Task
-						</TaskBlock>
-					</TaskList>
-				</div>;
-	}
-}
+	return <div className="tasks-container">
+				<h2>Your tasks</h2>
+				<TaskStatus className={activeCount == 0 ? 'completed' : ''}>
+					<h3>{activeCount > 0 ? 'Complete all tasks' : 'All tasks completed'}</h3>
+					<span className="status">
+						{activeCount > 0 ? `You have ${activeCount} active tasks` : 'Well done!'}
+					</span>
+				</TaskStatus>
+				<TaskList>
+					{props.tasks.map( (task, i) => <Task key={i} id={task.id} details={task} /> )}
+					<TaskBlock className="container-add" handleClick={props.addNewTask}>
+						+ Add Task
+					</TaskBlock>
+				</TaskList>
+			</div>;
+};
 
 let mapStateToProps = state => {
 	return {
