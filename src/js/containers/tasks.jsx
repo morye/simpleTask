@@ -9,51 +9,38 @@ const TaskStatus = props => <TaskBlock className={`container-complete ${props.cl
 
 const TaskList = props => <div className="task-list">{props.children}</div>;
 
-class Tasks extends React.Component {
-	constructor() {
-		super();
-		this.handleClick = this.handleClick.bind(this);
-		this.handleSave = this.handleSave.bind(this);
+const Tasks = props => {
+	let activeCount = 0;
+	for (let x=0; x<props.tasks.length; x++) {
+		activeCount = props.tasks[x].status == 'active' ? activeCount + 1 : activeCount;
 	}
-	handleClick (id) {
-		this.props.selectTask(id);
-	}
-	handleSave (task) {
-		this.props.saveTask(task);
-	}
-	render () {
-		let activeCount = 0;
-		for (let x=0; x<this.props.tasks.length; x++) {
-			activeCount = this.props.tasks[x].status == 'active' ? activeCount + 1 : activeCount;
-		}
 
-		return <div className="tasks-container">
-					<h2>Your tasks</h2>
-					<TaskStatus className={activeCount == 0 ? 'completed' : ''}>
-						<h3>{activeCount > 0 ? 'Complete all tasks' : 'All tasks completed'}</h3>
-						<span className="status">
-							{activeCount > 0 ? `You have ${activeCount} active tasks` : 'Well done!'}
-						</span>
-					</TaskStatus>
-					<TaskList>
-						{this.props.tasks.map( (task, i) =>
-							<Task
-								key={i}
-								id={task.id}
-								name={task.name}
-								status={task.status}
-								isClicked={task.isSelected}
-								onClick={this.handleClick}
-								onSave={this.handleSave}
-							/> )
-						}
-						<TaskBlock className="container-add" handleClick={this.props.addNewTask}>
-							+ Add Task
-						</TaskBlock>
-					</TaskList>
-				</div>;
-	}
-};
+	return <div className="tasks-container">
+				<h2>Your tasks</h2>
+				<TaskStatus className={activeCount == 0 ? 'completed' : ''}>
+					<h3>{activeCount > 0 ? 'Complete all tasks' : 'All tasks completed'}</h3>
+					<span className="status">
+						{activeCount > 0 ? `You have ${activeCount} active tasks` : 'Well done!'}
+					</span>
+				</TaskStatus>
+				<TaskList>
+					{props.tasks.map( (task, i) =>
+						<Task
+							key={i}
+							id={task.id}
+							name={task.name}
+							status={task.status}
+							isClicked={task.isSelected}
+							onClick={props.selectTask}
+							onSave={props.saveTask}
+						/> )
+					}
+					<TaskBlock className="container-add" handleClick={props.addNewTask}>
+						+ Add Task
+					</TaskBlock>
+				</TaskList>
+			</div>;
+}
 
 let mapStateToProps = state => {
 	return {
