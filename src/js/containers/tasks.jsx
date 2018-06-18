@@ -23,7 +23,14 @@ const Tasks = props => {
 					</span>
 				</TaskStatus>
 				<TaskList>
-					{props.tasks.map( (task, i) => <Task key={i} id={task.id} details={task} /> )}
+					{props.tasks.map( (task, i) =>
+						<Task
+							key={i}
+							id={task.id}
+							name={task.name}
+							status={task.status}
+						/> )
+					}
 					<TaskBlock className="container-add" handleClick={props.addNewTask}>
 						+ Add Task
 					</TaskBlock>

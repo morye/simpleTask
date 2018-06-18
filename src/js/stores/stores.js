@@ -15,9 +15,13 @@ const addTask = (state, task) => {
 };
 
 const saveTask = (state, task) => {
-	return { tasks: state.tasks.map( (_task, i) => {
+	let activeCount = 0;
+	let updatedTasks = state.tasks.map( (_task, i) => {
+			if (task.status == 'active') {
+				activeCount ++
+			}
 			if (task.id == _task.id) {
-				return { 
+				return {
 					id: task.id,
 					name: task.name,
 					status: task.status
@@ -25,7 +29,8 @@ const saveTask = (state, task) => {
 			} else {
 				return _task;
 			}
-		}) };
+		});
+	return { tasks: updatedTasks, activeCount:activeCount };
 };
 
 function todo (state = {

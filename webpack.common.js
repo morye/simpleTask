@@ -15,11 +15,11 @@ module.exports = {
   plugins: [
 	  new CleanWebpackPlugin(['dist']),
 	  new HtmlWebpackPlugin({
-		template: './src/html/index.html'
+		    template: './src/html/index.html'
 	  })
 	],
   resolve: {
-	extensions: ['.js', '.jsx']
+	   extensions: ['.js', '.jsx']
   },
   module: {
     loaders: [

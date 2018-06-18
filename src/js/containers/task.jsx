@@ -46,7 +46,6 @@ class Task extends React.Component {
 
 	handleUpdate (e) {
 		e.preventDefault();
-		//e.stopPropagation();
 
 		let type = e.target.getAttribute('data-id');
 
@@ -62,19 +61,18 @@ class Task extends React.Component {
 
 	render () {
 		let partial;
-		let status = this.props.details.status;
 
 		if (this.state.selected) {
 			partial = <div className="selected">
-					{this.props.details.status == 'active' ?
+					{this.props.status == 'active' ?
 						<a className="btn complete" data-id="complete" onClick={this.handleUpdate}>Complete</a> :
 						<a className="btn undo" data-id="undo" onClick={this.handleUpdate}>Undo</a>}
 					<a className="btn edit" data-id="edit" onClick={this.handleUpdate}>Edit</a>
 				</div>;
-		} else if (status == 'active' || status == 'complete') {
+		} else if (this.props.status == 'active' || this.props.status == 'complete') {
 			partial = <div className="btn" onClick={this.handleSelect} >
-						<h3>{this.props.details.name}</h3>
-						<span className={`status ${this.props.details.status}`}>{this.props.details.status}</span>
+						<h3>{this.props.name}</h3>
+						<span className={`status ${this.props.status}`}>{this.props.status}</span>
 					</div>;
 		} else {
 			partial = <div className="form">
@@ -83,14 +81,11 @@ class Task extends React.Component {
 					</div>;
 		}
 
-		return <TaskBlock>
-					{partial}
-				</TaskBlock>;
+		return <TaskBlock>{partial}</TaskBlock>;
 	}
 }
 
 Task.defaultValue = {
-	details: {}
 };
 
 let mapStateToProps = state => ({});
