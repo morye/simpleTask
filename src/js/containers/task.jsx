@@ -2,15 +2,17 @@ import React from 'react';
 
 import TaskBlock from '../components/taskBlock';
 
-const TaskSelected = props => <div className="selected">
-																<button className={props.type} data-id={props.type} onClick={props.handleUpdate}>{props.type}</button>
-																<button className="edit" data-id="edit" onClick={props.handleUpdate}>Edit</button>
-															</div>;
+const TaskSelected = props =>
+<div className="selected">
+	<button className={props.type} data-id={props.type} onClick={props.handleUpdate}>{props.type}</button>
+	<button className="edit" data-id="edit" onClick={props.handleUpdate}>Edit</button>
+</div>;
 
-const TaskSet = props => <div onClick={props.handleClick} >
-														<h3>{props.name}</h3>
-														<span className={`status ${props.status}`}>{props.status}</span>
-													</div>;
+const TaskSet = props =>
+<div onClick={props.handleClick}>
+	<h3>{props.name}</h3>
+	<span className={`status ${props.status}`}>{props.status}</span>
+</div>;
 
 class Task extends React.PureComponent {
 
