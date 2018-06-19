@@ -13,21 +13,21 @@ const addTask = (state, task) => {
 };
 
 const saveTask = (state, task) => {
-	return { tasks: state.tasks.map( (_task, i) =>
-			(task.id == _task.id) ? {
+	return { tasks: state.tasks.map( (item, i) =>
+			(task.id == item.id) ? {
 				id: task.id,
 				name: task.name,
 				status: task.status,
 				isSelected: false
-			} : _task
+			} : item
 		)}
 }
 
 
 const selectTask = (state, id) => {
 	return {
-		tasks: state.tasks.map( (task, i) =>
-		(task.id == id) ? {...task, isSelected:true } : task
+		tasks: state.tasks.map( (item, i) =>
+		(item.id == id) ? {...item, isSelected:true } : item
 	)}
 };
 
@@ -40,7 +40,7 @@ function todo (state = {
 		case types.SAVETASK:
 			return saveTask (state, action.task);
 		case types.SELECTTASK:
-			return selectTask (state, action.task);
+			return selectTask (state, action.id);
 		default:
 			return state;
 	}

@@ -12,6 +12,6 @@ export function saveTask (task) {
 	return { type: types.SAVETASK, task:task };
 }
 
-export function selectTask (task) {
-	return { type: types.SELECTTASK, task:task };
+export function selectTask (id) {
+	return { type: types.SELECTTASK, id:id };
 }

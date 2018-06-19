@@ -2,7 +2,17 @@ import React from 'react';
 
 import TaskBlock from '../components/taskBlock';
 
-class Task extends React.Component {
+const TaskSelected = props => <div className="selected">
+																<button className={props.type} data-id={props.type} onClick={props.handleUpdate}>{props.type}</button>
+																<button className="edit" data-id="edit" onClick={props.handleUpdate}>Edit</button>
+															</div>;
+
+const TaskSet = props => <div onClick={props.handleClick} >
+														<h3>{props.name}</h3>
+														<span className={`status ${props.status}`}>{props.status}</span>
+													</div>;
+
+class Task extends React.PureComponent {
 
 	constructor () {
 		super ();
@@ -52,24 +62,17 @@ class Task extends React.Component {
 
 	render () {
 		let partial;
+		let isStatusSet = this.props.status == 'active' || this.props.status == 'complete';
 
 		if (this.props.isClicked) {
-			partial = <div className="selected">
-					{this.props.status == 'active' ?
-						<a className="btn complete" data-id="complete" onClick={this.handleUpdate}>Complete</a> :
-						<a className="btn undo" data-id="undo" onClick={this.handleUpdate}>Undo</a>}
-					<a className="btn edit" data-id="edit" onClick={this.handleUpdate}>Edit</a>
-				</div>;
-		} else if (this.props.status == 'active' || this.props.status == 'complete') {
-			partial = <div className="btn" onClick={this.handleClick} >
-						<h3>{this.props.name}</h3>
-						<span className={`status ${this.props.status}`}>{this.props.status}</span>
-					</div>;
+			partial = <TaskSelected type={this.props.status == 'active' ? 'complete' : 'undo'} handleUpdate={this.handleUpdate} />
+		} else if (isStatusSet) {
+			partial = <TaskSet name={this.props.name} status={this.props.status} handleClick={this.handleClick} />
 		} else {
-			partial = <div className="form">
-						<input type="text" placeholder="Enter task name ..." onChange={this.handleChange} value={this.state.value} />
-						<a className="btn save" data-id="save" onClick={this.handleUpdate}>Save</a>
-					</div>;
+			partial = <form className="form" onSubmit={this.handleUpdate}>
+									<input type="text" placeholder="Enter task name ..." onChange={this.handleChange} value={this.state.value} />
+									<button className="save" type="submit" data-id="save">Save</button>
+								</form>;
 		}
 
 		return <TaskBlock>{partial}</TaskBlock>;

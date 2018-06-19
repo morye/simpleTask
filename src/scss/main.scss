@@ -85,9 +85,13 @@ body {
 				}
 			}
 
-			.btn {
+			button {
+				border: none;
+				outline: none;
+				background-color: transparent;
 				font-weight: bold;
-
+				text-transform: capitalize;
+				
 				&:hover {
 					cursor: pointer;
 				}
@@ -117,7 +121,7 @@ body {
 				flex-flow: row wrap;
 				align-content: center;
 
-				a {
+				button {
 					display: block;
 					flex: 1 1 50%;
 					text-align: center;

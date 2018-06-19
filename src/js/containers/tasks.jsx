@@ -11,9 +11,10 @@ const TaskList = props => <div className="task-list">{props.children}</div>;
 
 const Tasks = props => {
 	let activeCount = 0;
-	for (let x=0; x<props.tasks.length; x++) {
-		activeCount = props.tasks[x].status == 'active' ? activeCount + 1 : activeCount;
-	}
+	props.tasks.forEach(task => {
+		if (task.status == 'active')
+			activeCount ++;
+	});
 
 	return <div className="tasks-container">
 				<h2>Your tasks</h2>
@@ -55,8 +56,8 @@ let mapActionsToProps = dispatch =>({
 	saveTask (task) {
 		return dispatch (saveTask(task));
 	},
-	selectTask (task) {
-		return dispatch (selectTask(task));
+	selectTask (id) {
+		return dispatch (selectTask(id));
 	}
 });
 
