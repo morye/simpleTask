@@ -19,11 +19,6 @@ class Task extends React.PureComponent {
 	constructor () {
 		super ();
 
-		this.state = {
-			value: ''
-		};
-
-		this.handleChange = this.handleChange.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.handleUpdate = this.handleUpdate.bind(this);
 	}
@@ -40,26 +35,21 @@ class Task extends React.PureComponent {
 				return 'active';
 		}
 	}
-
-	handleChange (e) {
-		this.setState({
-			value: e.target.value
-		})
-	}
 	handleClick () {
 		this.props.onClick(this.props.id);
 	}
 
 	handleUpdate (e) {
 		e.preventDefault();
-
-		let type = e.target.getAttribute('data-id');
-
-		this.props.onSave({
-			id: this.props.id,
-			name: this.state.value,
-			status: this.getNextStatus(type)
-		});
+		if (this._input.value != '') {
+			let type = e.target.getAttribute('data-id');
+			this.props.onSave({
+				id: this.props.id,
+				name: this._input.value,
+				status: this.getNextStatus(type)
+			});
+			this._input.value = '';
+		}
 	}
 
 	render () {
@@ -72,9 +62,13 @@ class Task extends React.PureComponent {
 			partial = <TaskSet name={this.props.name} status={this.props.status} handleClick={this.handleClick} />
 		} else {
 			partial = <form className="form" onSubmit={this.handleUpdate}>
-									<input type="text" placeholder="Enter task name ..." onChange={this.handleChange} value={this.state.value} />
-									<button className="save" type="submit" data-id="save">Save</button>
-								</form>;
+				<input 
+					ref={node => { this._input = node }}
+					type="text" 
+					placeholder="Enter task name ..." 
+					/>
+				<button className="save" type="submit" data-id="save">Save</button>
+			</form>;
 		}
 
 		return <TaskBlock>{partial}</TaskBlock>;
