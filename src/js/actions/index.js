@@ -4,8 +4,8 @@ export function addTask () {
 	return { type: types.ADDTASK };
 }
 
-export function removeTask () {
-	return { type: types.REMOVETASK };
+export function removeTask (id) {
+	return { type: types.REMOVETASK, id:id };
 }
 
 export function saveTask (task) {

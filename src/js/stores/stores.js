@@ -23,12 +23,19 @@ const saveTask = (state, task) => {
 		)}
 }
 
-
 const selectTask = (state, id) => {
 	return {
 		tasks: state.tasks.map( (item, i) =>
 		(item.id == id) ? {...item, isSelected:true } : item
 	)}
+};
+
+const removeTask = (state, id) => {
+	return {
+		tasks: state.tasks.filter(item => {
+      if(item.id !== id) return item;
+    })
+	}
 };
 
 function todo (state = {
@@ -41,6 +48,8 @@ function todo (state = {
 			return saveTask (state, action.task);
 		case types.SELECTTASK:
 			return selectTask (state, action.id);
+		case types.REMOVETASK:
+			return removeTask (state, action.id);
 		default:
 			return state;
 	}

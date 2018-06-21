@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 
-import { addTask, saveTask, selectTask } from '../actions/index';
+import { addTask, saveTask, selectTask, removeTask } from '../actions/index';
 import TaskBlock from '../components/taskBlock';
 import Task from './task';
 
@@ -34,10 +34,11 @@ const Tasks = props => {
 							isClicked={task.isSelected}
 							onClick={props.selectTask}
 							onSave={props.saveTask}
+							onRemove={props.removeTask}
 						/> )
 					}
-					<TaskBlock className="container-add" handleClick={props.addNewTask}>
-						+ Add Task
+					<TaskBlock className="container-add">
+						<button onClick={props.addNewTask}>+ Add Task</button>
 					</TaskBlock>
 				</TaskList>
 			</div>;
@@ -58,6 +59,9 @@ let mapActionsToProps = dispatch =>({
 	},
 	selectTask (id) {
 		return dispatch (selectTask(id));
+	},
+	removeTask (id) {
+		return dispatch (removeTask(id));
 	}
 });
 

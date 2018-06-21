@@ -1,7 +1,7 @@
 import React from 'react';
 
-const TaskBlock = props => 
-	<div className={`task-block ${props.className || ''}`} onClick={props.handleClick}>
+const TaskBlock = props =>
+	<div className={`task-block ${props.className || ''}`}>
 		<div className="wrapper">
 			{props.children}
 		</div>

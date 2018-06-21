@@ -3,13 +3,13 @@ import React from 'react';
 import TaskBlock from '../components/taskBlock';
 
 const TaskSelected = props =>
-<div className="selected">
+<div className="taskSelected">
 	<button className={props.type} data-id={props.type} onClick={props.handleUpdate}>{props.type}</button>
 	<button className="edit" data-id="edit" onClick={props.handleUpdate}>Edit</button>
 </div>;
 
 const TaskSet = props =>
-<div onClick={props.handleClick}>
+<div className="taskSet" onClick={props.handleClick}>
 	<h3>{props.name}</h3>
 	<span className={`status ${props.status}`}>{props.status}</span>
 </div>;
@@ -19,6 +19,7 @@ class Task extends React.PureComponent {
 	constructor () {
 		super ();
 
+		this.handleAdd = this.handleAdd.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.handleUpdate = this.handleUpdate.bind(this);
 	}
@@ -39,7 +40,7 @@ class Task extends React.PureComponent {
 		this.props.onClick(this.props.id);
 	}
 
-	handleUpdate (e) {
+	handleAdd (e) {
 		e.preventDefault();
 		if (this._input.value != '') {
 			let type = e.target.getAttribute('data-id');
@@ -52,6 +53,16 @@ class Task extends React.PureComponent {
 		}
 	}
 
+	handleUpdate (e) {
+		e.preventDefault();
+		let type = e.target.getAttribute('data-id');
+		this.props.onSave({
+			id: this.props.id,
+			name: this.props.name,
+			status: this.getNextStatus(type)
+		});
+	}
+
 	render () {
 		let partial;
 		let isStatusSet = this.props.status == 'active' || this.props.status == 'complete';
@@ -61,17 +72,26 @@ class Task extends React.PureComponent {
 		} else if (isStatusSet) {
 			partial = <TaskSet name={this.props.name} status={this.props.status} handleClick={this.handleClick} />
 		} else {
-			partial = <form className="form" onSubmit={this.handleUpdate}>
-				<input 
-					ref={node => { this._input = node }}
-					type="text" 
-					placeholder="Enter task name ..." 
+			partial = <form className="form" onSubmit={this.handleAdd}>
+				<input
+					ref={node => {
+						this._input = node
+					}}
+					type="text"
+					placeholder="Enter task name ..."
+					defaultValue={this.props.name}
 					/>
 				<button className="save" type="submit" data-id="save">Save</button>
 			</form>;
 		}
 
-		return <TaskBlock>{partial}</TaskBlock>;
+		return <TaskBlock>
+			<a className="remove" title="Remove" onClick={(e) => {
+				e.preventDefault();
+				this.props.onRemove(this.props.id)
+			}}>X</a>
+			{partial}
+			</TaskBlock>;
 	}
 }
 
