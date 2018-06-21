@@ -2,7 +2,7 @@
 
 Simple task management application.
 
-All dependencies are packaged in bundle at ./dist/index.bundle.js
+All dependencies are packaged in bundle at ./dist/index.[hash].js
 You can launch the app by opening ./dist/index.html from the web browser.
 
 You can also launch the app on your localhost
